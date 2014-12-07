@@ -1,4 +1,4 @@
-# fino.zsh-theme
+# ale.zsh-theme
 
 # Use with a dark background and 256-color terminal!
 # Meant for people with rbenv and git. Tested only on OS X 10.7.
@@ -8,6 +8,7 @@
 # Borrowing shamelessly from these oh-my-zsh themes:
 #   bira
 #   robbyrussell
+#   fino
 #
 # Also borrowing from http://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
 
@@ -20,14 +21,41 @@ function box_name {
     [ -f ~/.box-name ] && cat ~/.box-name || hostname -s
 }
 
-local current_dir='${PWD/#$HOME/~}'
-local git_info='$(git_prompt_info)'
-local prompt_char='$(prompt_char)'
+function prompt_git() {
+  local ref
+  is_dirty() {
+    test -n "$(git status --porcelain --ignore-submodules)"
+  }
+  ref="$vcs_info_msg_0_"
+  if [[ -n "$ref" ]]; then
+  	ref="%F{white}on%f ${ref}"
+    if $(is_dirty); then
+      ref="${ref}%F{red}✘"
+    else
+      ref="${ref}%F{green}✔"
+    fi
+    echo "$ref"
+  fi
+}
 
-PROMPT="╭─%{$fg[green]%}%n%{$reset_color%} %{$fg[white]%}at%{$reset_color%} %{$fg[blue]%}$(box_name)%{$reset_color%} %{$fg[white]%}in%{$reset_color%} %{$terminfo[bold]$fg[yellow]%}${current_dir}%{$reset_color%}${git_info}
-%{$reset_color%}╰─${prompt_char} "
+prompt_ale_precmd() {
+  vcs_info
+  PROMPT="%f╭─%F{green}%n%f$prompt_ale_host %F{white}in%f %B%F{yellow}%~%b $(prompt_git)
+%f╰─$(prompt_char) "
+}
 
-ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg[white]%}on%{$reset_color%} %{$fg[255]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}✘"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}✔"
+prompt_ale_setup() {
+  autoload -Uz add-zsh-hook
+  autoload -Uz vcs_info
+
+  add-zsh-hook precmd prompt_ale_precmd
+
+  [[ "$SSH_CONNECTION" != '' ]] && prompt_ale_host=' %F{white}at%f %F{blue}%m%f'
+
+  zstyle ':vcs_info:*' enable git
+  zstyle ':vcs_info:*' check-for-changes false
+  zstyle ':vcs_info:git*' formats '%b'
+  zstyle ':vcs_info:git*' actionformats '%b (%a)'
+}
+
+prompt_ale_setup "$@"
