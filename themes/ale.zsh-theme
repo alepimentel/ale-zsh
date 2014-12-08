@@ -1,4 +1,4 @@
-# ale.zsh-theme
+P# ale.zsh-theme
 
 # Use with a dark background and 256-color terminal!
 # Meant for people with rbenv and git. Tested only on OS X 10.7.
@@ -42,6 +42,7 @@ prompt_ale_precmd() {
   vcs_info
   PROMPT="%f╭─%F{green}%n%f$prompt_ale_host %F{white}in%f %B%F{yellow}%~%b $(prompt_git)
 %f╰─$(prompt_char) "
+  RPROMPT="%(?..%F{red}%? ↵%f)"
 }
 
 prompt_ale_setup() {
