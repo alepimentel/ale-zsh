@@ -1,4 +1,4 @@
-P# ale.zsh-theme
+# ale.zsh-theme
 
 # Use with a dark background and 256-color terminal!
 # Meant for people with rbenv and git. Tested only on OS X 10.7.
@@ -9,7 +9,7 @@ P# ale.zsh-theme
 #   bira
 #   robbyrussell
 #   fino
-#
+#	agnoster
 # Also borrowing from http://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
 
 function prompt_char {
