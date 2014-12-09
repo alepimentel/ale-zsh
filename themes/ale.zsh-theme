@@ -9,7 +9,8 @@
 #   bira
 #   robbyrussell
 #   fino
-#	agnoster
+#   agnoster
+#   sorin
 # Also borrowing from http://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
 
 function prompt_char {
@@ -21,6 +22,17 @@ function box_name {
     [ -f ~/.box-name ] && cat ~/.box-name || hostname -s
 }
 
+function prompt_ale_pwd {
+  local pwd="${PWD/#$HOME/~}"
+
+  if [[ "$pwd" == (#m)[/~] ]]; then
+    _prompt_ale_pwd="$MATCH"
+    unset MATCH
+  else
+    _prompt_ale_pwd="${${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
+  fi
+}
+
 function prompt_git() {
   local ref
   is_dirty() {
@@ -28,7 +40,7 @@ function prompt_git() {
   }
   ref="$vcs_info_msg_0_"
   if [[ -n "$ref" ]]; then
-  	ref="%F{white}on%f ${ref}"
+    ref="%F{white}on%f ${ref}"
     if $(is_dirty); then
       ref="${ref}%F{red}✘"
     else
@@ -40,7 +52,9 @@ function prompt_git() {
 
 prompt_ale_precmd() {
   vcs_info
-  PROMPT="%f╭─%F{green}%n%f$prompt_ale_host %F{white}in%f %B%F{yellow}%~%b $(prompt_git)
+  prompt_ale_pwd
+
+  PROMPT="%f╭─%F{green}%n%f$prompt_ale_host %F{white}in%f %B%F{yellow}${_prompt_ale_pwd}%b $(prompt_git)
 %f╰─$(prompt_char) "
   RPROMPT="%(?..%F{red}%? ↵%f)"
 }
