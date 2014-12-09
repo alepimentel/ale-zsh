@@ -20,7 +20,7 @@ Installation
 ------------
   1. Clone the repository:
 
-        `git clone https://apimentelr@bitbucket.org/apimentelr/.ale-zsh.git`
+        git clone https://apimentelr@bitbucket.org/apimentelr/.ale-zsh.git ale.zsh
 
   2. Create a symlink to the theme file:
 
@@ -31,7 +31,7 @@ Installation
 
   2.2 If you're using Prezto:
 
-  Run `ln -s ~/ale.zsh/themes/ale/zsh-theme ~/zprezto/modules/prompt/functions/prompt_ale_setup`
+  Run `ln -s ~/ale.zsh/themes/ale.zsh-theme ~/.zprezto/modules/prompt/functions/prompt_ale_setup`
   Load the theme in ~/.zpreztorc.
 
   3. Run `source ~/.zshrc` to reload update the prompt.
