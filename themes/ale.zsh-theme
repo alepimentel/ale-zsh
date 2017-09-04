@@ -13,27 +13,16 @@
 #   sorin
 # Also borrowing from http://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
 
-function prompt_char {
+prompt_char() {
   git branch >/dev/null 2>/dev/null && echo "±" && return
   echo '○'
 }
 
-function box_name {
+box_name() {
     [ -f ~/.box-name ] && cat ~/.box-name || hostname -s
 }
 
-function prompt_ale_pwd {
-  local pwd="${PWD/#$HOME/~}"
-
-  if [[ "$pwd" == (#m)[/~] ]]; then
-    _prompt_ale_pwd="$MATCH"
-    unset MATCH
-  else
-    _prompt_ale_pwd="${${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
-  fi
-}
-
-function virtualenv_prompt_info() {
+virtualenv_prompt_info() {
   if [ -n "$VIRTUAL_ENV" ]; then
     if [ -f "$VIRTUAL_ENV/__name__" ]; then
       local name=`cat $VIRTUAL_ENV/__name__`
@@ -47,7 +36,7 @@ function virtualenv_prompt_info() {
   fi
 }
 
-function prompt_git() {
+prompt_git() {
   local ref
   is_dirty() {
     test -n "$(git status --porcelain --ignore-submodules)"
@@ -60,15 +49,15 @@ function prompt_git() {
     else
       ref="${ref}%F{green}✔"
     fi
-    echo "$ref "
+    echo "$ref%f"
   fi
 }
 
 prompt_ale_precmd() {
   vcs_info
-  prompt_ale_pwd
+  _prompt_ale_pwd=$(promptpwd)
 
-  PROMPT="%f╭─%F{green}%n%f$prompt_ale_host %F{white}in%f %B%F{yellow}${_prompt_ale_pwd}%b $(prompt_git)$(virtualenv_prompt_info)
+  PROMPT="%f╭─%F{green}%n%f$prompt_ale_host %F{white}in%f %B%F{yellow}${_prompt_ale_pwd}%b%f $(prompt_git)%b $(virtualenv_prompt_info)
 %f╰─$(prompt_char) "
   RPROMPT="%(?..%F{red}%? ↵%f)"
 }
