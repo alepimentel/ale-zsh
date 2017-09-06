@@ -55,7 +55,7 @@ prompt_git() {
 
 prompt_ale_precmd() {
   vcs_info
-  _prompt_ale_pwd=$(promptpwd)
+  _prompt_ale_pwd=$(prompt-pwd)
 
   PROMPT="%f╭─%F{green}%n%f$prompt_ale_host %F{white}in%f %B%F{yellow}${_prompt_ale_pwd}%b%f $(prompt_git)%b $(virtualenv_prompt_info)
 %f╰─$(prompt_char) "
