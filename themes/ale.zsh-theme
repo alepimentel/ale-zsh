@@ -31,7 +31,7 @@ virtualenv_prompt_info() {
     else
       local name=$(basename $VIRTUAL_ENV)
     fi
-    local ref="%F{white}using%f %F{red}$ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX$name$ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX"
+    local ref=" %F{white}using%f %F{red}$ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX$name$ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX"
     echo "$ref"
   fi
 }
@@ -49,7 +49,7 @@ prompt_git() {
     else
       ref="${ref}%F{green}✔"
     fi
-    echo "$ref%f"
+    echo " $ref%f"
   fi
 }
 
@@ -57,7 +57,7 @@ prompt_ale_precmd() {
   vcs_info
   _prompt_ale_pwd=$(prompt-pwd)
 
-  PROMPT="%f╭─%F{green}%n%f$prompt_ale_host %F{white}in%f %B%F{yellow}${_prompt_ale_pwd}%b%f $(prompt_git)%b $(virtualenv_prompt_info)
+  PROMPT="%f╭─%F{green}%n%f$prompt_ale_host %F{white}in%f %B%F{yellow}${_prompt_ale_pwd}%b%f$(prompt_git)%b$(virtualenv_prompt_info)
 %f╰─$(prompt_char) "
   RPROMPT="%(?..%F{red}%? ↵%f)"
 }
