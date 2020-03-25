@@ -19,7 +19,7 @@ Installation
 ------------
   1. Clone the repository:
 
-        git clone https://apimentelr@bitbucket.org/apimentelr/.ale-zsh.git
+    git clone https://github.com/alepimentel/ale-zsh.git ~/.ale-zsh
 
   2. Create a symlink to the theme file:
 
