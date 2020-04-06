@@ -25,7 +25,7 @@ Installation
 
   2.1 If you're using Oh My Zsh:
 
-  Run `ln -s ~/.ale-zsh/themes/ale.zsh-theme ~/.ohmyzsh/ale.zsh-theme`
+  Run `ln -s ~/.ale-zsh/themes/ale.zsh-theme ~/.ohmyzsh/themes/ale.zsh-theme`
   Load the theme in ~/.zshrc.
 
   2.2 If you're using Prezto:
