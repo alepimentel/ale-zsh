@@ -15,8 +15,16 @@ prompt_char() {
 	echo '○'
 }
 
-box_name() {
-	[ -f ~/.box-name ] && cat ~/.box-name || hostname -s
+prompt_ale_host() {
+	local name=""
+	if [ -f ~/.box-name ]; then
+		name=$(cat ~/.box-name)
+	elif [[ "$SSH_CONNECTION" != "" ]]; then
+		name="%m"
+	fi
+	if [[ "$name" != "" ]]; then
+		echo " %F{white}at%f %F{blue}${name}%f"
+	fi
 }
 
 prompt_virtualenv() {
@@ -37,8 +45,6 @@ prompt_ruby() {
 		version="$(rvm-prompt)"
 	elif (( $+commands[rbenv] )); then
 		version="$(rbenv version-name)"
-	elif (( $+commands[ruby] )); then
-		version="${${$(ruby --version)[(w)1,(w)2]}/ /-}"
 	fi
 
 	if [[ $version != 'system' ]]; then
@@ -53,8 +59,8 @@ prompt_nodenv() {
 		local nodenv_version_name="$(nodenv version-name)"
 		local nodenv_global="$(nodenv global)"
 		if [[ "${nodenv_version_name}" != "${nodenv_global}" ]]; then
-			local ref="$nodenv_version_name"
-			echo "%F{red}$ref%F{white}"
+			local name="$nodenv_version_name"
+			echo "%F{red}$name%F{white}"
 		fi
 	fi
 }
@@ -90,7 +96,7 @@ prompt_ale_precmd() {
 	vcs_info
 	_prompt_ale_pwd=$(prompt-pwd)
 
-	PROMPT="%f╭─%F{green}%n%f$prompt_ale_host %F{white}in%f %B%F{yellow}${_prompt_ale_pwd}%b%f$(prompt_git)%b$(prompt_envs)
+	PROMPT="%f╭─%F{green}%n%f$(prompt_ale_host) %F{white}in%f %B%F{yellow}${_prompt_ale_pwd}%b%f$(prompt_git)%b$(prompt_envs)
 %f╰─$(prompt_char) "
 	RPROMPT="%(?..%F{red}%? ↵%f)"
 }
@@ -102,8 +108,6 @@ prompt_ale_setup() {
 	setopt prompt_subst
 
 	add-zsh-hook precmd prompt_ale_precmd
-
-	[[ "$SSH_CONNECTION" != '' ]] && prompt_ale_host=' %F{white}at%f %F{blue}%m%f'
 
 	zstyle ':vcs_info:*' enable git
 	zstyle ':vcs_info:*' check-for-changes false

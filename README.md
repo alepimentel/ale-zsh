@@ -1,15 +1,18 @@
 Ale ZSH Theme
 =============
 
-This theme is an improvement to the fino theme, which is included in Oh My Zsh.
+This theme is based on the fino theme.
+
+![Ale theme](screenshots/image.png)
 
 What does it show?
 ------------------
 
-- User & Hostname (hostname is only displayed while connected to a remote host, through SSH)
-- Current branch / SHA1 in detached head state
-- Dirty working directory (✔/✘)
-- Working directory
+- User and hostname
+- Current working directory
+- Current git branch (SHA1 in detached head state)
+- Dirtiness of working directory (✔/✘)
+- Active virtualenv, ruby version (rvm and rbenv), and node version (nodenv)
 
 Compatibility
 -------------
@@ -23,15 +26,18 @@ Installation
 
   2. Create a symlink to the theme file:
 
-  2.1 If you're using Oh My Zsh:
+  __If you're using Oh My Zsh__:
 
-  Run `ln -s ~/.ale-zsh/themes/ale.zsh-theme ~/.ohmyzsh/themes/ale.zsh-theme`
-  Load the theme in ~/.zshrc.
+  - Run `ln -s ~/.ale-zsh/themes/ale.zsh-theme ~/.ohmyzsh/themes/ale.zsh-theme`.
+  - Load the theme in `~/.zshrc`.
 
-  2.2 If you're using Prezto:
+  __If you're using Prezto__:
 
-  Run `ln -s ~/.ale-zsh/ale.zsh-theme ~/.zprezto/modules/prompt/functions/prompt_ale_setup`
-  Load the theme in ~/.zpreztorc.
+  - Run `ln -s ~/.ale-zsh/ale.zsh-theme ~/.zprezto/modules/prompt/functions/prompt_ale_setup`.
+  - Load the theme in `~/.zpreztorc`.
 
-  3. Run `source ~/.zshrc` to reload the prompt.
+  3. Open a new terminal.
 
+Notes
+-----
+By default, the hostname is displayed only during an ssh connection (i.e. in a remote server). You can write the hostname (or any name you want) in `~/.box-name` and it will be shown.
