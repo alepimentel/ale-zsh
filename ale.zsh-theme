@@ -47,7 +47,7 @@ prompt_ruby() {
 		version="$(rbenv version-name)"
 	fi
 
-	if [[ $version != 'system' ]]; then
+	if [[ $version && $version != 'system' ]]; then
 		echo "%F{red}$version%F{white}"
 	fi
 }
